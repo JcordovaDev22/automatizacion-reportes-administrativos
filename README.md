@@ -1,9 +1,11 @@
 Automatización de Reportes Administrativos
 
 Descripción
+
 Este sistema ha sido diseñado para optimizar el procesamiento de datos administrativos mediante la validación automatizada de registros. El proyecto implementa un pipeline de Integración Continua (CI) que asegura la integridad de los datos, validando IDs administrativos y evitando inconsistencias en los valores financieros, garantizando así la calidad del reporte final.
 
 Características Principales
+
 Pipeline de CI/CD: Automatización completa de pruebas con GitHub Actions.
 
 Validación de Datos: Reglas de negocio integradas para IDs administrativos (formato de 10 dígitos) y control de valores financieros no negativos.
