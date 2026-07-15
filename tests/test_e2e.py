@@ -1,3 +1,5 @@
+import requests
+import pytest
 from src.procesador import procesar_reporte
 
 def test_flujo_completo_procesamiento():
