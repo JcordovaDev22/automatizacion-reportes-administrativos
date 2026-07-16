@@ -1,29 +1,27 @@
-import requests
-import pytest
-from src.procesador import procesar_reporte
+import unittest
+from unittest.mock import patch
+from app import procesar_logica
 
-def test_flujo_completo_procesamiento():
-    """
-    Simula el flujo completo (E2E): 
-    1. Registro de un reporte válido.
-    2. Validación de reglas de negocio.
-    """
-    # Escenario: Usuario ingresa un reporte administrativo
-    reporte = {'id_administrativo': '1234567890', 'valor': 500}
+class TestE2E(unittest.TestCase):
     
-    # Acción: El sistema procesa el reporte
-    resultado, mensaje = procesar_reporte(reporte)
-    
-    # Verificación: El sistema debe aceptar el reporte
-    assert resultado == True
-    assert mensaje == "Reporte procesado"
-    
-    # Escenario adicional: Usuario intenta ingresar datos corruptos
-    reporte_error = {'id_administrativo': '000', 'valor': -10}
-    
-    # Acción: Procesamiento
-    resultado_error, mensaje_error = procesar_reporte(reporte_error)
-    
-    # Verificación: El sistema debe rechazarlo
-    assert resultado_error == False
-    assert mensaje_error != "Reporte procesado"
+    @patch('builtins.input', side_effect=['1234567890', '150.50'])
+    def test_flujo_completo_procesar_reporte(self, mock_input):
+        """
+        Simula el flujo completo del usuario: 
+        1. Ingresa ID administrativo
+        2. Ingresa valor
+        3. Verifica que la lógica se ejecuta sin errores
+        """
+        resultado = procesar_logica()
+        self.assertTrue(resultado, "El flujo de procesamiento de reporte debería devolver True")
+
+    @patch('builtins.input', side_effect=['ID_INVALIDO', 'no_es_numero'])
+    def test_flujo_error_valores(self, mock_input):
+        """
+        Simula un flujo de error donde el usuario ingresa valores incorrectos
+        """
+        resultado = procesar_logica()
+        self.assertFalse(resultado, "Debería fallar al procesar datos no numéricos")
+
+if __name__ == '__main__':
+    unittest.main()
